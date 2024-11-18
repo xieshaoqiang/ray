@@ -36,9 +36,9 @@ class APIIngress:
     autoscaling_config={"min_replicas": 1, "max_replicas": 2},
 )
 class ObjectDetection:
-    def __init__(self, message: str):
-        self._message = message
-        print("Message:", self._message)
+    def __init__(self):
+        # self._message = message
+        # print("Message:", self._message)
         ROOT = 'D:/alg/ultralytics_yolov5_master'
         # self.model = torch.hub.load(ROOT, 'custom', source = 'local', path = ROOT +  '/yolov5s.pt')
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
@@ -53,14 +53,14 @@ class ObjectDetection:
         self.threshold = config["threshold"]
 
 
-def app_builder(args: Dict[str, str]) -> Application:
-    return ObjectDetection.bind(args["message"])
+# def app_builder(args: Dict[str, str]) -> Application:
+#     return ObjectDetection.bind(args["message"])
 
-class HelloWorldArgs(BaseModel):
-    message: str
-
-def typed_app_builder(args: HelloWorldArgs) -> Application:
-    return ObjectDetection.bind(args.message)
+# class HelloWorldArgs(BaseModel):
+#     message: str
+#
+# def typed_app_builder(args: HelloWorldArgs) -> Application:
+#     return ObjectDetection.bind(args.message)
 
 
 entrypoint = APIIngress.bind(ObjectDetection.bind())
