@@ -63,5 +63,5 @@ class ObjectDetection:
 #     return ObjectDetection.bind(args.message)
 
 
-entrypoint = APIIngress.bind(ObjectDetection.bind())
+entrypoin = APIIngress.bind(ObjectDetection.bind())
 
