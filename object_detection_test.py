@@ -57,6 +57,8 @@ class ObjectDetection:
     def reconfigure(self, config: Dict):
         self._language = config["language"]
         print("Language:", self._language)
+        self._type = config["type"]
+        print("Type:", self._type)
 
 
 def app_builder(args: Dict[str, str]) -> Application:
