@@ -30,15 +30,20 @@ class APIIngress:
         image.save(file_stream, "jpeg")
         return Response(content=file_stream.getvalue(), media_type="image/jpeg")
 
+    def reconfigure(self, config: Dict):
+        self._threshold = config["threshold"]
+        print("Threshold:", self._threshold)
 
 @serve.deployment(
     # ray_actor_options={"num_gpus": 1},
     autoscaling_config={"min_replicas": 1, "max_replicas": 2},
 )
 class ObjectDetection:
-    def __init__(self):
-        # self._message = message
-        # print("Message:", self._message)
+    def __init__(self, message: str, code: int):
+        self._message = message
+        self._code = code
+        print("Message:", self._message)
+        print("Code:", self._code)
         ROOT = 'D:/alg/ultralytics_yolov5_master'
         # self.model = torch.hub.load(ROOT, 'custom', source = 'local', path = ROOT +  '/yolov5s.pt')
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
@@ -50,11 +55,12 @@ class ObjectDetection:
         return Image.fromarray(result_im.render()[0].astype(np.uint8))
 
     def reconfigure(self, config: Dict):
-        self.threshold = config["threshold"]
+        self._language = config["language"]
+        print("Language:", self._language)
 
 
-# def app_builder(args: Dict[str, str]) -> Application:
-#     return ObjectDetection.bind(args["message"])
+def app_builder(args: Dict[str, str]) -> Application:
+    return APIIngress.bind(ObjectDetection.bind(args["message"], args["code"]))
 
 # class HelloWorldArgs(BaseModel):
 #     message: str
@@ -63,5 +69,5 @@ class ObjectDetection:
 #     return ObjectDetection.bind(args.message)
 
 
-entrypoin = APIIngress.bind(ObjectDetection.bind())
+# entrypoint = APIIngress.bind(ObjectDetection.bind())
 
