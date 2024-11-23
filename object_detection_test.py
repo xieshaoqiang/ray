@@ -44,9 +44,9 @@ class ObjectDetection:
         self._code = code
         print("Message:", self._message)
         print("Code:", self._code)
-        ROOT = 'D:/alg/ultralytics_yolov5_master'
-        # self.model = torch.hub.load(ROOT, 'custom', source = 'local', path = ROOT +  '/yolov5s.pt')
-        self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
+        ROOT = '/home/naswork/xsq_test_ray/ultralytics_yolov5_master'
+        self.model = torch.hub.load(ROOT, 'custom', source = 'local', path = ROOT +  '/yolov5s.pt')
+        #self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
         # self.model.cuda()
         # self.model.to(torch.device(0))
 
